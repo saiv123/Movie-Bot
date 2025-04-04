@@ -33,17 +33,22 @@ def addToWatchList(id, typeS):
 async def on_startup():
     print("Bot ready")
 
+#! Need to add check if other content other than the movie name is in the message like a mention or etc...
 @message_context_menu(name="Add movie to list")
 async def addToListContext(ctx: ContextMenuContext):
     message: Message = ctx.target
-    #add check for if the movie / tv show exists
-    await ctx.send(f"{message.content} has been added to the list")
+    (status, json) = Is_A_Movie(message.content)
+    if status:
+        addToWatchList(json["results"][0]["id"], "Movie")
+        await ctx.send(f"{message.content} has been added to the list")
+    else:
+        await ctx.send(f"{message.content} was not found to be a movie")
 
 
 @slash_command(name="scan", description="will scan the channel for movies and shows")
 async def scan(ctx: SlashContext):
     messages:list[str] = []
-    if ctx.channel.message_count < 50:
+    if ctx.channel.message_count >= 50:
         await ctx.send("Sorry there is too many messages in this channel, you will need to add the movies or shows manually.")
     else:
         history = ctx.channel.history(limit=0)
@@ -51,12 +56,11 @@ async def scan(ctx: SlashContext):
     
     if len(messages) > 0:
         for message in messages:
-            temp.replace(" ","%20")
             temp:str = message.split("\n")
             for e in temp:
                 (status, json) = Is_A_Movie(e)
                 if status:
                     addToWatchList(json["results"][0]["id"], "Movie")
                 else:
-                    await ctx.send(f"{e} was not found to be a movie")    
+                    await ctx.send(f"{e} was not found to be a movie")
 bot.start(token)
