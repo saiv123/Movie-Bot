@@ -12,7 +12,7 @@ def Is_A_Movie(name):
         "Authorization": apikey
         }
     url = f"https://api.themoviedb.org/3/search/movie?query={name}&language=en-US&page=1"
-    response = requests.get(url, headers=header)
+    response = requests.get(url, headers=header).json()
     return (response["total_results"] != 0, response)
 
 def addToWatchList(id, typeS):
@@ -27,7 +27,7 @@ def addToWatchList(id, typeS):
         "media_id": id,
         "watchlist": True
     }
-    response = requests.post(url, json=data, headers=header)
+    response = requests.post(url, json=data, headers=header).json()
     return response["success"]
 @listen()
 async def on_startup():
@@ -54,13 +54,8 @@ async def scan(ctx: SlashContext):
             temp.replace(" ","%20")
             temp:str = message.split("\n")
             for e in temp:
-                if e[:2] == "%20":
-                    e=e[2:]
-                if e[-2:] == "%20":
-                    e=e[:-2]
                 (status, json) = Is_A_Movie(e)
                 if status:
-                    id = json["results"][0]["id"]
                     addToWatchList(json["results"][0]["id"], "Movie")
                 else:
                     await ctx.send(f"{e} was not found to be a movie")    
