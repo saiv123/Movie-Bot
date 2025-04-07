@@ -29,7 +29,17 @@ def Check(name: str) -> tuple[bool, dict | None, str | None]:
             return (response["total_results"] != 0, response, Type)
     return (False, None, None)
 
-def addToWatchList(id, typeS:str):
+def addToWatchList(id:int, typeS:str)->bool:
+    """
+    A Function to add a movie or tv show to "The movie db" watchlist
+
+    Args:
+        id: integer usually from check function
+        typeS: type of the id usually from the check function
+    
+    Returns:
+        Boolean
+    """
     header = {
         "accept": "application/json",
         "content-type": "application/json",
