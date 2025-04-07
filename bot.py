@@ -67,7 +67,7 @@ async def addToListContext(ctx: ContextMenuContext):
     else:
         await ctx.send(f"{message.content} was not found to be a movie\nIf there is multiple names in one message I can't process that yet ;(")
 #TODO: Add "add_to_watchlist" command
-##Command depreciated, will only allow the right click and add or with sending a message in a channel specified
+##Command deprecated, will only allow the right click and add or with sending a message in a channel specified
 # @slash_command(name="scan", description="will scan the channel for movies and shows")
 # async def scan(ctx: SlashContext):
 #     messages:list[str] = []
