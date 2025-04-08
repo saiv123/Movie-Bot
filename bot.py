@@ -61,7 +61,6 @@ def ButtonCheck(component: Component)->bool:
         return True
     return False
 
-
 @listen()
 async def on_startup():
     print("Bot ready")
