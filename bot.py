@@ -27,7 +27,7 @@ def Check(name: str) -> tuple[bool, dict | None, str | None]:
     url = f"https://api.themoviedb.org/3/search/multi?query={name}&language=en-US&page=1"
     response = requests.get(url, headers=header).json()
     if response["total_results"] != 0:
-        media_type = response["results"][0]["media_type"]
+        media_type: str = response["results"][0]["media_type"]
         return (True, response, media_type)
     return (False, None, None)
 
@@ -117,7 +117,7 @@ async def add_with_id(ctx: SlashContext, id: int):
     
     # Check if the ID corresponds to a TV show
     tv_url = f"https://api.themoviedb.org/3/tv/{id}?language=en-US"
-    tv_response = requests.get(tv_url, headers=headers).json()
+    tv_response: dict = requests.get(tv_url, headers=headers).json()
     
     if "id" in tv_response:
         media_type = "tv"
