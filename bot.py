@@ -7,7 +7,6 @@ from secret import token, apikey
 import requests
 
 #? might want to have check return the id as well instead of searching the json
-#TODO: create function for adding media with id and type
 
 bot = interactions.Client()
 
