@@ -4,7 +4,7 @@ from bot import Check, addToWatchList
 
 class TestBotFunctions(unittest.TestCase):
 
-    @patch('bot.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
+    @patch('secrets.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
     @patch('bot.requests.get')
     def test_Check_function_success(self, mock_get):
         # Mock the API response for a successful search
@@ -19,7 +19,7 @@ class TestBotFunctions(unittest.TestCase):
         self.assertEqual(media_type, "movie")
         self.assertEqual(json, mock_response)
 
-    @patch('bot.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
+    @patch('secrets.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
     @patch('bot.requests.get')
     def test_Check_function_no_results(self, mock_get):
         # Mock the API response for no results
@@ -31,7 +31,7 @@ class TestBotFunctions(unittest.TestCase):
         self.assertIsNone(json)
         self.assertIsNone(media_type)
 
-    @patch('bot.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
+    @patch('secrets.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
     @patch('bot.requests.post')
     def test_addToWatchList_success(self, mock_post):
         # Mock the API response for a successful watchlist addition
@@ -41,7 +41,7 @@ class TestBotFunctions(unittest.TestCase):
         result = addToWatchList(12345, "movie")
         self.assertTrue(result)
 
-    @patch('bot.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
+    @patch('secrets.apikey', 'mocked_api_key')  # Mock the apikey from secrets.py
     @patch('bot.requests.post')
     def test_addToWatchList_failure(self, mock_post):
         # Mock the API response for a failed watchlist addition
